@@ -1,6 +1,5 @@
 package catanDiceBot.dice
 
-import catanDiceBot.collection.HistoryList
 import mu.KotlinLogging
 import kotlin.math.roundToInt
 
@@ -15,7 +14,7 @@ class CatanDiceRoller(totalRolls: Int) {
     private val combinations = 36
     private val valueRange = 2..12
     private val values = IntArray(this.totalRolls)
-    private val history = HistoryList<Pair<String?, Int>>(this.totalRolls)
+    private val history = ArrayList<Pair<String?, Int>>(this.totalRolls)
     private var rollIndex = 0
 
     init {
@@ -43,9 +42,9 @@ class CatanDiceRoller(totalRolls: Int) {
     }
 
     fun history(): String {
-        return if (history.isEmpty()) "Пусто" else history.joinToString("\n") {
-            "${it.first}: ${it.second}"
-        }
+        return if (history.isEmpty()) "Пусто" else history.mapIndexed { index, pair ->
+            "${index+1}) ${pair.first}: ${pair.second} []"
+        }.joinToString("\n")
     }
 
     fun stats(): CatanDiceRollerStats {
