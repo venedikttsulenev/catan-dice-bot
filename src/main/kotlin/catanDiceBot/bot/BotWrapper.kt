@@ -21,7 +21,7 @@ class BotWrapper(val bot: Bot) {
             opts?.toInt()
         } catch (e: NumberFormatException) {
             100
-        }
+        } ?: 100
         rollerPool.resetRoller(getChatIdString(msg), totalRolls)
         sendReply(msg, "Ресетнулся на $totalRolls бросков")
     }
