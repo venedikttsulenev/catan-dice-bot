@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 application {
-    project.setProperty("mainClassName", "catanDiceBot.MainKt")
+    project.setProperty("mainClassName", "catanDiceBot.bot.MainKt")
 }
 
 plugins {
@@ -28,10 +28,6 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-}
-
-tasks.jar {
-    manifest.attributes["Main-Class"] = "catanDiceBot.MainKt"
 }
 
 tasks.withType(ShadowJar::class) {
