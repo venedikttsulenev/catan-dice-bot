@@ -2,7 +2,7 @@ package catanDiceBot.bot
 
 import com.elbekd.bot.Bot
 
-class BotFactory(private val token: String, private val totalRolls: Int?) {
+class BotFactory(private val token: String) {
 
     fun createBot(): Bot {
         val bot = Bot.createPolling(token)
