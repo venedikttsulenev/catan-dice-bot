@@ -1,5 +1,6 @@
 package catanDiceBot.dice
 
+import catanDiceBot.bot.Defaults
 import mu.KotlinLogging
 
 class CatanDiceRollerPool {
@@ -7,7 +8,7 @@ class CatanDiceRollerPool {
     private val rollers = mutableMapOf<String, CatanDiceRoller>()
 
     operator fun get(chatId: String) =
-        rollers[chatId] ?: createDiceRoller(chatId, 100)
+        rollers[chatId] ?: createDiceRoller(chatId, Defaults.totalRolls)
 
     fun resetRoller(chatId: String, totalRolls: Int) {
         rollers[chatId] = createDiceRoller(chatId, totalRolls)

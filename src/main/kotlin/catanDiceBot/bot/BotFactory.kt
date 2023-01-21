@@ -13,7 +13,7 @@ class BotFactory(private val token: String) {
     }
 
     private fun createCallbacks(botWrapper: BotWrapper) {
-        botWrapper.run {
+        with(botWrapper) {
             bot.onCallbackQuery("roll") {
                 this.roll(it.message!!, it.from)
             }
@@ -27,7 +27,7 @@ class BotFactory(private val token: String) {
     }
 
     private fun createCommands(botWrapper: BotWrapper) {
-        botWrapper.run {
+        with(botWrapper) {
             bot.onCommand("/reset") { (msg, opts) ->
                 this.reset(msg, opts)
             }

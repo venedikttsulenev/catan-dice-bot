@@ -6,21 +6,20 @@ import kotlin.math.roundToInt
 class CatanDiceRoller(totalRolls: Int) {
 
     private val log = KotlinLogging.logger("DiceRoller")
-    private val totalRolls = if (totalRolls <= 0 || totalRolls > 1000) 100 else totalRolls
     private val chance = IntArray(13) { index ->
         if (index <= 7) index - 1
         else 13 - index
     }
     private val combinations = 36
     private val valueRange = 2..12
-    private val values = IntArray(this.totalRolls)
-    private val history = ArrayList<Pair<String?, Int>>(this.totalRolls)
+    private val values = IntArray(totalRolls)
+    private val history = ArrayList<Pair<String?, Int>>(totalRolls)
     private var rollIndex = 0
 
     init {
-        val fullCombinationSets = this.totalRolls.toFloat() / combinations
+        val fullCombinationSets = totalRolls.toFloat() / combinations
         val totalRollsByValue = chance.map { fullCombinationSets.times(it).roundToInt() }.toIntArray()
-        totalRollsByValue[7] += this.totalRolls - totalRollsByValue.slice(valueRange).sum()
+        totalRollsByValue[7] += totalRolls - totalRollsByValue.slice(valueRange).sum()
         log.info("totalRolls = $totalRolls")
         log.info("totalRollsByValue = ${totalRollsByValue.slice(valueRange).joinToString()} (${totalRollsByValue.slice(valueRange).sum()})")
         var index = 0
