@@ -14,16 +14,22 @@ class BotWrapper(val bot: Bot) {
         ))
     )
 
-    private var rollerPool = CatanDiceRollerPool()
+    private var rollerPool = CatanDiceRollerPool(Constants.defaultTotalRolls)
 
     suspend fun reset(msg: Message, opts: String?) {
-        val totalRolls = try {
-            opts?.toInt()
-        } catch (e: NumberFormatException) {
-            Defaults.totalRolls
-        } ?: Defaults.totalRolls
+        val totalRolls = parseTotalRolls(opts)
         rollerPool.resetRoller(getChatIdString(msg), totalRolls)
         sendReply(msg, "Ресетнулся на $totalRolls бросков")
+    }
+
+    private fun parseTotalRolls(opts: String?) = try {
+        opts?.toInt()?.let {
+            if (it < Constants.minTotalRollsAllowed) Constants.minTotalRollsAllowed
+            else if (it > Constants.maxTotalRollsAllowed) Constants.maxTotalRollsAllowed
+            else it
+        } ?: Constants.defaultTotalRolls
+    } catch (e: NumberFormatException) {
+        Constants.defaultTotalRolls
     }
 
     suspend fun roll(msg: Message, user: User?) {

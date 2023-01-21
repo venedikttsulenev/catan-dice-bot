@@ -1,14 +1,13 @@
 package catanDiceBot.dice
 
-import catanDiceBot.bot.Defaults
 import mu.KotlinLogging
 
-class CatanDiceRollerPool {
+class CatanDiceRollerPool(private val defaultTotalRolls: Int) {
     private val log = KotlinLogging.logger("DiceRollerPool")
     private val rollers = mutableMapOf<String, CatanDiceRoller>()
 
     operator fun get(chatId: String) =
-        rollers[chatId] ?: createDiceRoller(chatId, Defaults.totalRolls)
+        rollers[chatId] ?: createDiceRoller(chatId, defaultTotalRolls)
 
     fun resetRoller(chatId: String, totalRolls: Int) {
         rollers[chatId] = createDiceRoller(chatId, totalRolls)
